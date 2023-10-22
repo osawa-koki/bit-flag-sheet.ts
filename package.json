@@ -1,0 +1,16 @@
+{
+  "name": "bit-flag-sheet.ts",
+  "version": "1.0.0",
+  "description": "🎃🎃🎃 バイナリデータをビットフラグで表現するためのシートです！",
+  "repository": "https://github.com/osawa-koki/bit-flag-sheet.ts.git",
+  "author": "osawa-koki <koki@osawa.dev>",
+  "license": "Apache-2.0",
+  "private": false,
+  "engines": {
+    "node": ">=20.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
