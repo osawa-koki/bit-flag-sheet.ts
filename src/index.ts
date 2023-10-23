@@ -17,6 +17,7 @@ fileImporter.addEventListener('click', () => {
   _fileInput.click()
 })
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 _fileInput.addEventListener('change', async () => {
 	const file = _fileInput.files![0];
   sheetName = file.name
