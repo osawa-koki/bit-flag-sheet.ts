@@ -1,4 +1,6 @@
-import { removeChildren } from "./functions.js";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+import { removeChildren } from './functions.js'
 
 const FILE_SIZE_CONFIRM_LIMIT = 10 << 20 // 10MB
 
@@ -17,19 +19,20 @@ fileImporter.addEventListener('click', () => {
   _fileInput.click()
 })
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 _fileInput.addEventListener('change', async () => {
-	const file = _fileInput.files![0];
+  const file = _fileInput.files![0]
   sheetName = file.name
-	const reader = new FileReader();
-	reader.readAsArrayBuffer(file);
-	reader.onload = async () => {
-		bitObjects.splice(0);
-		removeChildren('sheet')
-		const dataView = new DataView(reader.result! as ArrayBuffer)
-		if (FILE_SIZE_CONFIRM_LIMIT < dataView.byteLength && !window.confirm(`ファイルサイズが「${dataView.byteLength}」バイトあります。\n処理を続行しますか???`)) {
-			return;
-		};
-		try {
+  const reader = new FileReader()
+  reader.readAsArrayBuffer(file)
+  reader.onload = async () => {
+    bitObjects.splice(0)
+    removeChildren('sheet')
+    const dataView = new DataView(reader.result! as ArrayBuffer)
+    if (FILE_SIZE_CONFIRM_LIMIT < dataView.byteLength && !window.confirm(`ファイルサイズが「${dataView.byteLength}」バイトあります。\n処理を続行しますか???`)) {
+      return
+    };
+    try {
       for (let i = 0; i < dataView.byteLength; i++) {
         const byteArray: number[] = []
         const byteData = dataView.getUint8(i)
@@ -44,8 +47,8 @@ _fileInput.addEventListener('change', async () => {
         for (const bit of byteArray) {
           const bitBox = document.createElement('div')
           bitBox.classList.add('bit', 'w-10', 'h-10', 'flex', 'justify-center', 'items-center', 'border-2', 'border-black')
-          bitBox.classList.add(bit ? 'bg-yellow-300' : 'bg-transparent')
-          bitBox.textContent = bit ? '1' : '0'
+          bitBox.classList.add(bit === 1 ? 'bg-yellow-300' : 'bg-transparent')
+          bitBox.textContent = bit === 1 ? '1' : '0'
           bitBox.addEventListener('click', () => {
             bitBox.classList.toggle('bg-yellow-300')
             bitBox.classList.toggle('bg-transparent')
@@ -59,10 +62,10 @@ _fileInput.addEventListener('change', async () => {
         }
         sheet.appendChild(byteBox)
       }
-		} catch (ex) {
+    } catch (ex) {
       console.error(ex)
-		}
-	}
+    }
+  }
 })
 
 fileExporter.addEventListener('click', () => {
@@ -86,3 +89,5 @@ fileExporter.addEventListener('click', () => {
   a.click()
   URL.revokeObjectURL(url)
 })
+
+/* eslint-enable @typescript-eslint/no-non-null-assertion */
