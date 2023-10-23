@@ -6,11 +6,18 @@
   "author": "osawa-koki <koki@osawa.dev>",
   "license": "Apache-2.0",
   "private": false,
+  "type": "module",
   "engines": {
     "node": ">=20.0.0",
     "yarn": ">=1.22.0"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "tsc",
+    "css:build": "tailwindcss -i ./src/source.css -o ./src/style.css"
+  },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
+  }
 }
