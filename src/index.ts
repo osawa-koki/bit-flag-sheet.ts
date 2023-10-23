@@ -2,10 +2,12 @@ import { removeChildren } from "./functions.js";
 
 const FILE_SIZE_CONFIRM_LIMIT = 10 << 20 // 10MB
 
-const fileImporter = document.getElementById('file-importer')! as HTMLInputElement
+const fileImporter = document.getElementById('file-importer')! as HTMLButtonElement
+const fileExporter = document.getElementById('file-exporter')! as HTMLButtonElement
 const sheet = document.getElementById('sheet')! as HTMLDivElement
 
 const bitObjects: number[][] = []
+let sheetName = null
 
 // 内部的にファイルを開くためのinput要素。
 const _fileInput = document.createElement('input')
@@ -17,6 +19,7 @@ fileImporter.addEventListener('click', () => {
 
 _fileInput.addEventListener('change', async () => {
 	const file = _fileInput.files![0];
+  sheetName = file.name
 	const reader = new FileReader();
 	reader.readAsArrayBuffer(file);
 	reader.onload = async () => {
@@ -52,7 +55,7 @@ _fileInput.addEventListener('change', async () => {
             bitObjects[byteIndex][bitIndex] = bitBox.classList.contains('bg-yellow-300') ? 1 : 0
           })
           byteBox.appendChild(bitBox)
-          await new Promise(resolve => setTimeout(resolve, 100))
+          await new Promise(resolve => setTimeout(resolve, 10))
         }
         sheet.appendChild(byteBox)
       }
@@ -60,4 +63,26 @@ _fileInput.addEventListener('change', async () => {
       console.error(ex)
 		}
 	}
+})
+
+fileExporter.addEventListener('click', () => {
+  const flattenByteArray = []
+  for (const byteArray of bitObjects) {
+    for (const bit of byteArray) {
+      flattenByteArray.push(bit)
+    }
+  }
+  const bytes = new Uint8Array(flattenByteArray.length / 8)
+  for (let i = 0; i < flattenByteArray.length; i++) {
+    const bitIndex = i % 8
+    const byteIndex = Math.floor(i / 8)
+    bytes[byteIndex] |= flattenByteArray[i] << bitIndex
+  }
+  const blob = new Blob([bytes], { type: 'application/octet-stream' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = sheetName!
+  a.click()
+  URL.revokeObjectURL(url)
 })
