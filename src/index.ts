@@ -43,6 +43,14 @@ _fileInput.addEventListener('change', async () => {
           bitBox.classList.add('bit', 'w-10', 'h-10', 'flex', 'justify-center', 'items-center', 'border-2', 'border-black')
           bitBox.classList.add(bit ? 'bg-yellow-300' : 'bg-transparent')
           bitBox.textContent = bit ? '1' : '0'
+          bitBox.addEventListener('click', () => {
+            bitBox.classList.toggle('bg-yellow-300')
+            bitBox.classList.toggle('bg-transparent')
+            bitBox.textContent = bitBox.classList.contains('bg-yellow-300') ? '1' : '0'
+            const byteIndex = Array.from(byteBox.parentNode!.children).indexOf(byteBox)
+            const bitIndex = Array.from(bitBox.parentNode!.children).indexOf(bitBox)
+            bitObjects[byteIndex][bitIndex] = bitBox.classList.contains('bg-yellow-300') ? 1 : 0
+          })
           byteBox.appendChild(bitBox)
           await new Promise(resolve => setTimeout(resolve, 100))
         }
