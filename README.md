@@ -5,5 +5,5 @@
 ## 開発環境の構築
 
 ```shell
-yarn build && yarn css:build && http-server ./src/ -c1
+yarn build && yarn css:build && yarn http-server ./src/ -c1
 ```
