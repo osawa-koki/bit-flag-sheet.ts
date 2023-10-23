@@ -14,7 +14,8 @@
   "scripts": {
     "build": "tsc",
     "css:build": "tailwindcss -i ./src/source.css -o ./src/style.css",
-    "lint": "eslint --ext .ts ./src/"
+    "lint": "eslint --ext .ts ./src/",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {},
   "devDependencies": {
