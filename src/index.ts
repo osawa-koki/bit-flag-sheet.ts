@@ -2,7 +2,7 @@ import { removeChildren } from "./functions.js";
 
 const FILE_SIZE_CONFIRM_LIMIT = 10 << 20 // 10MB
 
-const fileOpener = document.getElementById('file-opener')! as HTMLInputElement
+const fileImporter = document.getElementById('file-importer')! as HTMLInputElement
 const sheet = document.getElementById('sheet')! as HTMLDivElement
 
 const bitObjects: number[][] = []
@@ -11,7 +11,7 @@ const bitObjects: number[][] = []
 const _fileInput = document.createElement('input')
 _fileInput.type = 'file'
 
-fileOpener.addEventListener('click', () => {
+fileImporter.addEventListener('click', () => {
   _fileInput.click()
 })
 
